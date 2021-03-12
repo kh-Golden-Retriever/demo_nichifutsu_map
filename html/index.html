@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Store Locator</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="heading">
+        <h1>Our locations</h1>
+      </div>
+      <div id="listings" class="listings"></div>
+    </div>
+    <div id="map" class="map"></div>
+    <script>
+      // This will let you use the .remove() function later on
+      if (!("remove" in Element.prototype)) {
+        Element.prototype.remove = function() {
+          if (this.parentNode) {
+            this.parentNode.removeChild(this);
+          }
+        };
+      }
+
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoib21pLWFrYXphd2EiLCJhIjoiY2tsaHFmaTZpMXdsNzJ2bWpuazJxdzgzdSJ9.E1sxPvjgoNLO1Lypsb2JuQ";
+      /**
+       * Add the map to the page
+       */
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/light-v10",
+        center: [135.5082724, 34.6840039],
+        zoom: 14,
+        scrollZoom: false,
+      });
+
+      var stores = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4943507, 34.6776971],
+            },
+            properties: {
+              number: "1",
+              store_name: "YARD Coffee & Craft Chocolate",
+              postcode: "〒543-0063",
+              address: "大阪府大阪市天王寺区茶臼山町１−３",
+              url: "http://yardosaka.com/",
+              Category_1: "カフェ",
+              Category_2: "イートイン可",
+              star: "★★★",
+              business_flag: "あり",
+              business_scale: "★★",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "内装が素晴らしい",
+              feedback: "★",
+            },
+          },
+
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.485389, 34.6705452],
+            },
+            properties: {
+              number: "2",
+              store_name: "アシッドラシーヌ",
+              postcode: "〒540-0037",
+              address: "大阪府大阪市中央区内平野町１丁目４−６",
+              url: "https://www.acidracines.com/",
+              Category_1: "パティスリー",
+              Category_2: "テイクアウト",
+              star: "★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "あり",
+              business_chance_scale: "★",
+              memo: "",
+              feedback: "★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.494473, 34.674441],
+            },
+            properties: {
+              number: "3",
+              store_name: "パティスリーオーディネール",
+              postcode: "〒550-0015",
+              address: "大阪府大阪市西区南堀江２丁目４−１６",
+              url: "https://patisserieordinaire.wixsite.com/ordinaire",
+              Category_1: "パティスリー",
+              Category_2: "イートイン可",
+              star: "★★",
+              business_flag: "不明",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "行列すごい",
+              feedback: "^^;",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.5131797, 34.65204970000001],
+            },
+            properties: {
+              number: "4",
+              store_name: "パティスリーアクイユ",
+              postcode: "〒550-0014",
+              address: "大阪府大阪市西区北堀江１丁目１７−１８−１０２",
+              url: "https://patisserie-accueil.com/",
+              Category_1: "パティスリー",
+              Category_2: "イートイン可",
+              star: "★★★★",
+              business_flag: "あり",
+              business_scale: "★",
+              business_chance_flag: "あり",
+              business_chance_scale: "★★★",
+              memo: "",
+              feedback: "★★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4918836, 34.6710762],
+            },
+            properties: {
+              number: "5",
+              store_name: "パティスリー ルシェルシェ",
+              postcode: "〒550-0015 ",
+              address: "大阪府大阪市西区南堀江４丁目５ B-101 西道頓堀ハイツB棟",
+              url: "http://rechercher34.jugem.jp/",
+              Category_1: "パティスリー",
+              Category_2: "テイクアウト",
+              star: "★★★",
+              business_flag: "不明",
+              business_scale: "",
+              business_chance_flag: "不明",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.515391, 34.687141],
+            },
+            properties: {
+              number: "6",
+              store_name: "餅匠 しづく 新町店",
+              postcode: "〒550-0013 ",
+              address: "大阪府大阪市西区新町１丁目１７−１７",
+              url: "https://mochi-shizuku.jp/",
+              Category_1: "和菓子",
+              Category_2: "イートイン可",
+              star: "★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.5082724, 34.6840039],
+            },
+            properties: {
+              number: "7",
+              store_name: "シャンパーニュと自然派ワイン hapo",
+              postcode: "〒542-0061 ",
+              address: "大阪府大阪市中央区安堂寺町１丁目５−２ 共栄ビル 1F",
+              url:
+                "https://www.facebook.com/pages/%E3%82%B7%E3%83%A3%E3%83%B3%E3%83%91%E3%83%BC%E3%83%8B%E3%83%A5%E3%81%A8%E8%87%AA%E7%84%B6%E6%B4%BE%E3%83%AF%E3%82%A4%E3%83%B3-hapo/370801619952555",
+              Category_1: "バール/バー",
+              Category_2: "その他",
+              star: "★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "自然派ワインが飲める店",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4977382, 34.6972099],
+            },
+            properties: {
+              number: "8",
+              store_name: "エニェ",
+              postcode: "〒541-0052",
+              address:
+                "大阪府大阪市中央区安土町１丁目６−３ エステムプラザ本町クロス 1F",
+              url: "https://www.enye.jp/",
+              Category_1: "レストラン",
+              Category_2: "その他洋食",
+              star: "★★★",
+              business_flag: "不明",
+              business_scale: "",
+              business_chance_flag: "不明",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.5180791, 34.6766008],
+            },
+            properties: {
+              number: "9",
+              store_name: "よし留（よしとめ）",
+              postcode: "〒530-0002 ",
+              address:
+                "大阪府大阪市北区曾根崎新地１丁目２−１０ 第三鈴木ビル 4F",
+              url: "",
+              Category_1: "レストラン",
+              Category_2: "和食",
+              star: "★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "予約必須",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.5160414, 34.6835119],
+            },
+            properties: {
+              number: "10",
+              store_name: "居酒屋 八べえ",
+              postcode: "〒542-0081 ",
+              address:
+                "大阪府大阪市中央区南船場１丁目８−１２ コーポ南船場 １Ｆ",
+              url: "https://www.papilles.net/shop_restaurants/",
+              Category_1: "レストラン",
+              Category_2: "和食",
+              star: "★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.5087594, 34.676991],
+            },
+            properties: {
+              number: "11",
+              store_name: "ブーランジュリー&カフェ グゥ",
+              postcode: "〒540-0026 ",
+              address: "大阪府大阪市中央区内本町１丁目１−１０ リンサンビル 1F",
+              url: "http://derien.co.jp/",
+              Category_1: "ベーカリー",
+              Category_2: "イートイン可",
+              star: "★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4911081, 34.686954],
+            },
+            properties: {
+              number: "12",
+              store_name: "ルルット",
+              postcode: "〒550-0002 ",
+              address: "大阪府大阪市西区江戸堀２丁目３−１７",
+              url: "https://www.facebook.com/pages/Louloutte/1504638593092983",
+              Category_1: "ベーカリー",
+              Category_2: "テイクアウト",
+              star: "★★★",
+              business_flag: "あり",
+              business_scale: "★★★",
+              business_chance_flag: "不明",
+              business_chance_scale: "",
+              memo: "パンドカンパーニュがおいしい",
+              feedback: "★★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.497511, 34.6801196],
+            },
+            properties: {
+              number: "13",
+              store_name: "パンデュース",
+              postcode: "〒541-0047 ",
+              address: "大阪府大阪市中央区淡路町４丁目３−１",
+              url: "http://www.painduce.com/",
+              Category_1: "ベーカリー",
+              Category_2: "テイクアウト",
+              star: "★★★★",
+              business_flag: "あり",
+              business_scale: "★",
+              business_chance_flag: "あり",
+              business_chance_scale: "★★",
+              memo: "",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4991861, 34.6867197],
+            },
+            properties: {
+              number: "14",
+              store_name: "ワインスタンド ニュメロドゥ",
+              postcode: "〒540-0029 ",
+              address: "大阪府大阪市中央区本町橋５−２ ビル1F 102",
+              url: "http://instagram.com/winestand_numero2",
+              Category_1: "バール/バー",
+              Category_2: "イートイン可",
+              star: "★★",
+              business_flag: "あり",
+              business_scale: "★",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "^^;",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4905609, 34.684926],
+            },
+            properties: {
+              number: "15",
+              store_name: "ルイーズ",
+              postcode: "〒550-0012 ",
+              address: "大阪府大阪市西区立売堀１丁目１−５",
+              url: "",
+              Category_1: "レストラン",
+              Category_2: "フレンチ",
+              star: "★★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "あり",
+              business_chance_scale: "★★★",
+              memo: "",
+              feedback: "★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4977858, 34.686767],
+            },
+            properties: {
+              number: "16",
+              store_name: "ビストロ デ シュナパン",
+              postcode: "〒550-0003 ",
+              address: "大阪府大阪市西区京町堀２丁目１４−１",
+              url: "",
+              Category_1: "ビストロ",
+              Category_2: "フレンチ",
+              star: "★★★",
+              business_flag: "あり",
+              business_scale: "★★",
+              business_chance_flag: "あり",
+              business_chance_scale: "★★",
+              memo: "自然派ワインが飲める店",
+              feedback: "★★★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.510164, 34.683194],
+            },
+            properties: {
+              number: "17",
+              store_name: "バレンシア",
+              postcode: "〒550-0011 ",
+              address: "大阪府大阪市西区阿波座１丁目２−１９ 椿堂ビルヂング 2階",
+              url: "https://restaurant.ikyu.com/111711/",
+              Category_1: "レストラン",
+              Category_2: "イタリアン",
+              star: "★★★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "",
+              feedback: "★",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [135.4974498, 34.6812963],
+            },
+            properties: {
+              number: "18",
+              store_name: "中国菜 シンペイ",
+              postcode: "〒550-0004 ",
+              address: "大阪府大阪市西区靱本町１丁目１−１８",
+              url: "",
+              Category_1: "レストラン",
+              Category_2: "その他",
+              star: "★★",
+              business_flag: "なし",
+              business_scale: "",
+              business_chance_flag: "なし",
+              business_chance_scale: "",
+              memo: "自然派ワインが飲める店",
+              feedback: "★",
+            },
+          },
+        ],
+      };
+
+      /**
+       * Assign a unique id to each store. You'll use this `id`
+       * later to associate each point on the map with a listing
+       * in the sidebar.
+       */
+      stores.features.forEach(function(store, i) {
+        store.properties.id = i;
+      });
+
+      /**
+       * Wait until the map loads to make changes to the map.
+       */
+      map.on("load", function(e) {
+        /**
+         * This is where your '.addLayer()' used to be, instead
+         * add only the source without styling a layer
+         */
+        map.addSource("places", {
+          type: "geojson",
+          data: stores,
+        });
+
+        /**
+         * Add all the things to the page:
+         * - The location listings on the side of the page
+         * - The markers onto the map
+         */
+        buildLocationList(stores);
+        addMarkers();
+      });
+
+      /**
+       * Add a marker to the map for every store listing.
+       **/
+      function addMarkers() {
+        /* For each feature in the GeoJSON object above: */
+        stores.features.forEach(function(marker) {
+          /* Create a div element for the marker. */
+          var el = document.createElement("div");
+          /* Assign a unique `id` to the marker. */
+          el.id = "marker-" + marker.properties.id;
+          /* Assign the `marker` class to each marker for styling. */
+          el.className = "marker";
+
+          /**
+           * Create a marker using the div element
+           * defined above and add it to the map.
+           **/
+          new mapboxgl.Marker(el, { offset: [0, -23] })
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+
+          /**
+           * Listen to the element and when it is clicked, do three things:
+           * 1. Fly to the point
+           * 2. Close all other popups and display popup for clicked store
+           * 3. Highlight listing in sidebar (and remove highlight for all other listings)
+           **/
+          el.addEventListener("click", function(e) {
+            /* Fly to the point */
+            flyToStore(marker);
+            /* Close all other popups and display popup for clicked store */
+            createPopUp(marker);
+            /* Highlight listing in sidebar */
+            var activeItem = document.getElementsByClassName("active");
+            e.stopPropagation();
+            if (activeItem[0]) {
+              activeItem[0].classList.remove("active");
+            }
+            var listing = document.getElementById(
+              "listing-" + marker.properties.id
+            );
+            listing.classList.add("active");
+          });
+        });
+      }
+
+      /**
+       * Add a listing for each store to the sidebar.
+       **/
+      function buildLocationList(data) {
+        data.features.forEach(function(store, i) {
+          /**
+           * Create a shortcut for `store.properties`,
+           * which will be used several times below.
+           **/
+          var prop = store.properties;
+
+          /* Add a new listing section to the sidebar. */
+          var listings = document.getElementById("listings");
+          var listing = listings.appendChild(document.createElement("div"));
+          /* Assign a unique `id` to the listing. */
+          listing.id = "listing-" + prop.id;
+          /* Assign the `item` class to each listing for styling. */
+          listing.className = "item";
+
+          /* Add the link to the individual listing created above. */
+          var link = listing.appendChild(document.createElement("a"));
+          link.href = "#";
+          link.className = "title";
+          link.id = "link-" + prop.id;
+          link.innerHTML = prop.store_name + " · " + prop.star;
+
+          /* Add details to the individual listing. */
+
+          var details = listing.appendChild(document.createElement("div"));
+          details.innerHTML = prop.Category_1 + " · " + prop.Category_2;
+
+          var details = listing.appendChild(document.createElement("div"));
+          details.innerHTML =
+            "取引 : " +
+            prop.business_flag +
+            "     　規模 : " +
+            prop.business_scale;
+
+          var details = listing.appendChild(document.createElement("div"));
+          details.innerHTML =
+            "案件 : " +
+            prop.business_chance_flag +
+            "     　規模 : " +
+            prop.business_chance_scale;
+
+          var details = listing.appendChild(document.createElement("div"));
+          details.innerHTML = prop.memo;
+
+          /**
+           * Listen to the element and when it is clicked, do four things:
+           * 1. Update the `currentFeature` to the store associated with the clicked link
+           * 2. Fly to the point
+           * 3. Close all other popups and display popup for clicked store
+           * 4. Highlight listing in sidebar (and remove highlight for all other listings)
+           **/
+          link.addEventListener("click", function(e) {
+            for (var i = 0; i < data.features.length; i++) {
+              if (this.id === "link-" + data.features[i].properties.id) {
+                var clickedListing = data.features[i];
+                flyToStore(clickedListing);
+                createPopUp(clickedListing);
+              }
+            }
+            var activeItem = document.getElementsByClassName("active");
+            if (activeItem[0]) {
+              activeItem[0].classList.remove("active");
+            }
+            this.parentNode.classList.add("active");
+          });
+        });
+      }
+
+      /**
+       * Use Mapbox GL JS's `flyTo` to move the camera smoothly
+       * a given center point.
+       **/
+      function flyToStore(currentFeature) {
+        map.flyTo({
+          center: currentFeature.geometry.coordinates,
+          zoom: 15,
+        });
+      }
+
+      /**
+       * Create a Mapbox GL JS `Popup`.
+       **/
+      function createPopUp(currentFeature) {
+        var popUps = document.getElementsByClassName("mapboxgl-popup");
+        if (popUps[0]) popUps[0].remove();
+        var popup = new mapboxgl.Popup({ closeOnClick: false })
+          .setLngLat(currentFeature.geometry.coordinates)
+          .setHTML(
+            "<h3>" +
+              currentFeature.properties.store_name +
+              "</h3>" +
+              "<h5>" +
+              currentFeature.properties.postcode +
+              "</h5>" +
+              "<h4>" +
+              currentFeature.properties.address +
+              "</h4>"
+          )
+          .addTo(map);
+      }
+    </script>
+  </body>
+</html>
