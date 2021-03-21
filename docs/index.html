@@ -26,7 +26,7 @@
     <script>
       // This will let you use the .remove() function later on
       if (!("remove" in Element.prototype)) {
-        Element.prototype.remove = function() {
+        Element.prototype.remove = function () {
           if (this.parentNode) {
             this.parentNode.removeChild(this);
           }
@@ -43,7 +43,7 @@
         style: "mapbox://styles/mapbox/light-v10",
         center: [135.5082724, 34.6840039],
         zoom: 14,
-        scrollZoom: false,
+        scrollZoom: true,
       });
 
       var stores = {
@@ -476,14 +476,14 @@
        * later to associate each point on the map with a listing
        * in the sidebar.
        */
-      stores.features.forEach(function(store, i) {
+      stores.features.forEach(function (store, i) {
         store.properties.id = i;
       });
 
       /**
        * Wait until the map loads to make changes to the map.
        */
-      map.on("load", function(e) {
+      map.on("load", function (e) {
         /**
          * This is where your '.addLayer()' used to be, instead
          * add only the source without styling a layer
@@ -507,7 +507,7 @@
        **/
       function addMarkers() {
         /* For each feature in the GeoJSON object above: */
-        stores.features.forEach(function(marker) {
+        stores.features.forEach(function (marker) {
           /* Create a div element for the marker. */
           var el = document.createElement("div");
           /* Assign a unique `id` to the marker. */
@@ -529,7 +529,7 @@
            * 2. Close all other popups and display popup for clicked store
            * 3. Highlight listing in sidebar (and remove highlight for all other listings)
            **/
-          el.addEventListener("click", function(e) {
+          el.addEventListener("click", function (e) {
             /* Fly to the point */
             flyToStore(marker);
             /* Close all other popups and display popup for clicked store */
@@ -554,7 +554,7 @@
        * Add a listing for each store to the sidebar.
        **/
       function buildLocationList(data) {
-        data.features.forEach(function(store, i) {
+        data.features.forEach(function (store, i) {
           /**
            * Create a shortcut for `store.properties`,
            * which will be used several times below.
@@ -605,7 +605,7 @@
            * 3. Close all other popups and display popup for clicked store
            * 4. Highlight listing in sidebar (and remove highlight for all other listings)
            **/
-          link.addEventListener("click", function(e) {
+          link.addEventListener("click", function (e) {
             for (var i = 0; i < data.features.length; i++) {
               if (this.id === "link-" + data.features[i].properties.id) {
                 var clickedListing = data.features[i];
